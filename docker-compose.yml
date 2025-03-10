@@ -1,0 +1,17 @@
+services:
+  db_fastapi:
+    image: postgres:13-alpine
+    container_name: db_fastapi
+    environment:
+      POSTGRES_USER: ilham
+      POSTGRES_PASSWORD: Rahasia123
+      POSTGRES_DB: db_fastapi
+    ports:
+      - "5432:5432"
+    volumes:
+      - db_fastapi_data:/var/lib/postgresql/data
+      
+
+volumes:
+  db_fastapi_data:
+
