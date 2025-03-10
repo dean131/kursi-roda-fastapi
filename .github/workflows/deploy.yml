@@ -51,5 +51,17 @@ jobs:
                   key: ${{ secrets.VPS_SSH_KEY }}
                   script: |
                       cd /home/dean-cloud/gii/kursi-roda/kursi-roda-fastapi
-                      git pull origin main
+                      python3 -m venv venv
+                      source venv/bin/activate
                       tar -xzvf dependencies.tar.gz -C venv/lib/python3.11/site-packages
+                      docker stop kursi-roda-fastapi || true
+                      docker rm kursi-roda-fastapi || true
+                      docker build -t kursi-roda-fastapi .
+                      docker run \
+                          --rm \
+                          --name kursi-roda-fastapi \
+                          --network npm_networks \
+                          -v /home/dean-cloud/gii/kursi-roda/kursi-roda-fastapi:/app \
+                          -v /home/dean-cloud/gii/kursi-roda/kursi-roda-fastapi/venv/lib/python3.11/site-packages:/usr/local/lib/python3.11/site-packages \
+                          -p 8000:8000 \
+                          -d kursi-roda-fastapi
