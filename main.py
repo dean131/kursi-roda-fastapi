@@ -13,4 +13,4 @@ app.include_router(product_route.router)
 
 @app.get("/")
 def home():
-    return {"message": "Welcome to FastAPI CRUD Product test"}
+    return {"message": "Welcome to FastAPI CRUD Product test2"}
