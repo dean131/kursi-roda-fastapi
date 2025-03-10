@@ -15,7 +15,7 @@ jobs:
             - name: Set up Python
               uses: actions/setup-python@v4
               with:
-                  python-version: "3.12"
+                  python-version: "3.13"
 
             - name: Create Virtual Environment
               run: |
@@ -25,7 +25,7 @@ jobs:
 
             - name: Package Dependencies
               run: |
-                  tar -czvf dependencies.tar.gz -C venv/lib/python3.12/site-packages .
+                  tar -czvf dependencies.tar.gz -C venv/lib/python3.13/site-packages .
 
             - name: Transfer Dependencies to VPS
               uses: appleboy/scp-action@v0.1.4
@@ -51,17 +51,4 @@ jobs:
                   key: ${{ secrets.VPS_SSH_KEY }}
                   script: |
                       cd /home/dean-cloud/gii/kursi-roda/kursi-roda-fastapi
-                      python3 -m venv venv
-                      source venv/bin/activate
-                      tar -xzvf dependencies.tar.gz -C venv/lib/python3.12/site-packages
-                      docker stop kursi-roda-fastapi || true
-                      docker rm kursi-roda-fastapi || true
-                      docker build -t kursi-roda-fastapi .
-                      docker run \
-                          --rm \
-                          --name kursi-roda-fastapi \
-                          --network npm_networks \
-                          -v /home/dean-cloud/gii/kursi-roda/kursi-roda-fastapi:/app \
-                          -v /home/dean-cloud/gii/kursi-roda/kursi-roda-fastapi/venv/lib/python3.12/site-packages:/usr/local/lib/python3.12/site-packages \
-                          -p 8000:8000 \
-                          -d kursi-roda-fastapi
+                      tar -xzvf dependencies.tar.gz -C venv/lib/python3.13/site-packages
