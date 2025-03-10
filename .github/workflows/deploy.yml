@@ -51,4 +51,5 @@ jobs:
                   key: ${{ secrets.VPS_SSH_KEY }}
                   script: |
                       cd /home/dean-cloud/gii/kursi-roda/kursi-roda-fastapi
+                      git pull origin main
                       tar -xzvf dependencies.tar.gz -C venv/lib/python3.13/site-packages
