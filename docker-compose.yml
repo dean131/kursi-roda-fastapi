@@ -22,5 +22,5 @@ services:
       - kursi-roda_data:/var/lib/postgresql/data
       
 volumes:
-  db_fastapi_data:
+  kursi-roda_data:
 
