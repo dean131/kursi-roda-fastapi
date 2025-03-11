@@ -4,15 +4,13 @@ services:
       context: .
       dockerfile: Dockerfile
     container_name: fastapi
-    ports:
-      - "8000:8000"
     volumes:
       - .:/app
     depends_on:
       - db_fastapi
     environment:
       - DATABASE_URL=postgresql://ilham:Rahasia123@db_fastapi/db_fastapi
-      
+
   db_fastapi:
     image: postgres:13-alpine
     container_name: db_fastapi
@@ -20,8 +18,6 @@ services:
       POSTGRES_USER: ilham
       POSTGRES_PASSWORD: Rahasia123
       POSTGRES_DB: db_fastapi
-    ports:
-      - "5432:5432"
     volumes:
       - db_fastapi_data:/var/lib/postgresql/data
       
