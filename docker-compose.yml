@@ -7,7 +7,7 @@ services:
     volumes:
       - .:/app
     depends_on:
-      - db_fastapi
+      - kursi-roda-postgres
     environment:
       - DATABASE_URL=postgresql://ilham:Rahasia123@db_fastapi/db_fastapi
 
