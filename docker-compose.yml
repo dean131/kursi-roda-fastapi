@@ -1,9 +1,9 @@
 services:
-  fastapi:
+  kursi-roda-fastapi:
     build:
       context: .
       dockerfile: Dockerfile
-    container_name: fastapi
+    container_name: kursi-roda-fastapi
     volumes:
       - .:/app
     depends_on:
@@ -11,9 +11,9 @@ services:
     environment:
       - DATABASE_URL=postgresql://ilham:Rahasia123@db_fastapi/db_fastapi
 
-  db_fastapi:
+  kursi-roda-postgres:
     image: postgres:13-alpine
-    container_name: db_fastapi
+    container_name: kursi-roda-postgres
     environment:
       POSTGRES_USER: ilham
       POSTGRES_PASSWORD: Rahasia123
