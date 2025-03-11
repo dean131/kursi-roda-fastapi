@@ -10,6 +10,8 @@ services:
       - kursi-roda-postgres
     environment:
       - DATABASE_URL=postgresql://ilham:Rahasia123@kursi-roda-postgres/kursi-roda
+    networks:
+      - npm_networks
 
   kursi-roda-postgres:
     image: postgres:13-alpine
@@ -20,7 +22,13 @@ services:
       POSTGRES_DB: kursi-roda
     volumes:
       - kursi-roda_data:/var/lib/postgresql/data
+    networks:
+      - npm_networks
       
 volumes:
   kursi-roda_data:
+
+networks:
+  npm_networks:
+    external: true
 
