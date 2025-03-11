@@ -3,7 +3,7 @@ name: Deploy FastAPI app to VPS
 on:
   push:
     branches:
-      - main  # Trigger this action on push to the main branch
+      - main  
 
 jobs:
   deploy:
@@ -24,10 +24,17 @@ jobs:
           source venv/bin/activate
           pip install -r requirements.txt
           
-      - name: Sync dependencies and code to VPS
+      - name: Add SSH key to known hosts
         run: |
-          rsync -avz --delete ./ ${{ secrets.USER }}@${{ secrets.VPS_HOST }}:/home/${{ secrets.USER }}/gii/kursi-roda/kursi-roda-fastapi/app/
-          rsync -avz --delete venv/ ${{ secrets.USER }}@${{ secrets.VPS_HOST }}:/home/${{ secrets.USER }}/gii/kursi-roda/kursi-roda-fastapi/venv/
+          mkdir -p ~/.ssh
+          ssh-keyscan -H ${{ secrets.VPS_HOST }} >> ~/.ssh/known_hosts
+          chmod 700 ~/.ssh
+          chmod 644 ~/.ssh/known_hosts
+
+      - name: Sync code and dependencies to VPS
+        run: |
+          rsync -avz --delete ./ dean-cloud@${{ secrets.VPS_HOST }}:/home/dean-cloud/gii/kursi-roda/kursi-roda-fastapi/
+          rsync -avz --delete venv/ dean-cloud@${{ secrets.VPS_HOST }}:/home/dean-cloud/gii/kursi-roda/venv/
         env:
           SSH_PRIVATE_KEY: ${{ secrets.VPS_SSH_KEY }}
 
