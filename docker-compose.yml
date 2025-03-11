@@ -6,6 +6,7 @@ services:
     container_name: kursi-roda-fastapi
     volumes:
       - .:/app
+      - /home/dean-cloud/gii/kursi-roda/kursi-roda-fastapi/venv:/venv
     depends_on:
       - kursi-roda-postgres
     environment:
@@ -24,11 +25,11 @@ services:
       - kursi-roda_data:/var/lib/postgresql/data
     networks:
       - npm_networks
-      
+
 volumes:
   kursi-roda_data:
+
 
 networks:
   npm_networks:
     external: true
-
