@@ -29,6 +29,6 @@ jobs:
           rsync -avz --delete ./ ${{ secrets.USER }}@${{ secrets.VPS_HOST }}:/home/${{ secrets.USER }}/gii/kursi-roda/kursi-roda-fastapi/app/
           rsync -avz --delete venv/ ${{ secrets.USER }}@${{ secrets.VPS_HOST }}:/home/${{ secrets.USER }}/gii/kursi-roda/kursi-roda-fastapi/venv/
         env:
-          SSH_PRIVATE_KEY: ${{ secrets.VPS_SSH_PRIVATE_KEY }}
+          SSH_PRIVATE_KEY: ${{ secrets.VPS_SSH_KEY }}
 
 
