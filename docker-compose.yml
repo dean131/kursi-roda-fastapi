@@ -9,7 +9,7 @@ services:
     depends_on:
       - kursi-roda-postgres
     environment:
-      - DATABASE_URL=postgresql://ilham:Rahasia123@db_fastapi/db_fastapi
+      - DATABASE_URL=postgresql://ilham:Rahasia123@kursi-roda-postgres/kursi-roda
 
   kursi-roda-postgres:
     image: postgres:13-alpine
@@ -17,11 +17,10 @@ services:
     environment:
       POSTGRES_USER: ilham
       POSTGRES_PASSWORD: Rahasia123
-      POSTGRES_DB: db_fastapi
+      POSTGRES_DB: kursi-roda
     volumes:
-      - db_fastapi_data:/var/lib/postgresql/data
+      - kursi-roda_data:/var/lib/postgresql/data
       
-
 volumes:
   db_fastapi_data:
 
