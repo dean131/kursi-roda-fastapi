@@ -24,17 +24,10 @@ jobs:
           source venv/bin/activate
           pip install -r requirements.txt
           
-      - name: Add SSH key to known hosts
+      - name: Sync dependencies and code to VPS
         run: |
-          mkdir -p ~/.ssh
-          ssh-keyscan -H ${{ secrets.VPS_HOST }} >> ~/.ssh/known_hosts
-          chmod 700 ~/.ssh
-          chmod 644 ~/.ssh/known_hosts
-
-      - name: Sync code and dependencies to VPS
-        run: |
-          rsync -avz --delete ./ dean-cloud@${{ secrets.VPS_HOST }}:/home/dean-cloud/gii/kursi-roda/kursi-roda-fastapi/
-          rsync -avz --delete venv/ dean-cloud@${{ secrets.VPS_HOST }}:/home/dean-cloud/gii/kursi-roda/venv/
+          rsync -avz --delete -e "ssh -o StrictHostKeyChecking=no" ./ ${{ secrets.USER }}@${{ secrets.VPS_HOST }}:/home/${{ secrets.USER }}/gii/kursi-roda/kursi-roda-fastapi/app/
+          rsync -avz --delete -e "ssh -o StrictHostKeyChecking=no" venv/ ${{ secrets.USER }}@${{ secrets.VPS_HOST }}:/home/${{ secrets.USER }}/gii/kursi-roda/kursi-roda-fastapi/venv/
         env:
           SSH_PRIVATE_KEY: ${{ secrets.VPS_SSH_KEY }}
 
