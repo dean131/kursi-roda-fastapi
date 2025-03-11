@@ -4,30 +4,32 @@ services:
       context: .
       dockerfile: Dockerfile
     container_name: kursi-roda-fastapi
+    restart: always
     volumes:
       - .:/app
-      - /home/dean-cloud/gii/kursi-roda/kursi-roda-fastapi/venv:/venv
+      - ./venv:/venv
     depends_on:
       - kursi-roda-postgres
-    environment:
-      - DATABASE_URL=postgresql://ilham:Rahasia123@kursi-roda-postgres:5432/kursi-roda
+    env_file:
+      - .env
     networks:
       - npm_networks
 
   kursi-roda-postgres:
     image: postgres:13-alpine
     container_name: kursi-roda-postgres
+    restart: always
     environment:
       POSTGRES_USER: ilham
       POSTGRES_PASSWORD: Rahasia123
-      POSTGRES_DB: kursi-roda
+      POSTGRES_DB: kursi_roda
     volumes:
-      - kursi-roda_data:/var/lib/postgresql/data
+      - kursi_roda_data:/var/lib/postgresql/data
     networks:
       - npm_networks
 
 volumes:
-  kursi-roda_data:
+  kursi_roda_data:
 
 
 networks:
