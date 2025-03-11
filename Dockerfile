@@ -1,14 +1,22 @@
-# Use the official Python image from the Docker Hub
-FROM python:3.13-slim
+# Gunakan image Python 3.13-slim sebagai base
+FROM python:3.13.2-slim
 
-# Set the working directory inside the container
+# Set working directory di dalam kontainer
 WORKDIR /app
 
-# Copy the application code
-COPY . .
+# Install dependensi sistem yang diperlukan (jika ada)
+RUN apt-get update && apt-get install -y --no-install-recommends \
+    build-essential \
+    && rm -rf /var/lib/apt/lists/*
 
-# Expose port 8000 for the FastAPI app
+# Copy file requirements.txt ke kontainer
+COPY requirements.txt .
+
+# Install dependensi Python
+RUN pip install --no-cache-dir -r requirements.txt
+
+# Expose port yang digunakan oleh FastAPI
 EXPOSE 8000
 
-# Define the command to run the app
-CMD ["uvicorn", "main:app", "--host", "0.0.0.0", "--port", "8000"]
+# Perintah untuk menjalankan aplikasi FastAPI
+CMD ["uvicorn", "main:app", "--host", "0.0.0.0", "--port", "8000", "--reload"]
