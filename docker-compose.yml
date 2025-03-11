@@ -9,7 +9,7 @@ services:
     depends_on:
       - kursi-roda-postgres
     environment:
-      - DATABASE_URL=postgresql://ilham:Rahasia123@kursi-roda-postgres/kursi-roda
+      - DATABASE_URL=postgresql://ilham:Rahasia123@kursi-roda-postgres:5432/kursi-roda
     networks:
       - npm_networks
 
