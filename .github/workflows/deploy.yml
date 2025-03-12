@@ -32,6 +32,8 @@ jobs:
         run: |
           python -m venv venv
           venv/bin/pip install -r requirements.txt
+          touch coba1.txt
+          mv coba1.txt venv/coba1.txt
 
       - name: Sync dependencies and code to VPS
         run: |
