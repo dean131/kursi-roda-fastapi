@@ -18,4 +18,4 @@ def home():
     print("Python executable:", sys.executable)
     print("Python environment:", sys.prefix)
     print("=====================================")
-    return {"message": "Welcome to FastAPI CRUD Product test23"}
+    return {"message": "Welcome to FastAPI CRUD Product test23 CUYYY"}
