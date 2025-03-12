@@ -31,12 +31,10 @@ jobs:
       - name: Install dependencies
         run: |
           python -m venv venv
-          source venv/bin/activate
-          pip install -r requirements.txt
+          venv/bin/pip install -r requirements.txt
 
       - name: Sync dependencies and code to VPS
         run: |
-          rsync -avz --delete ./ dean-cloud@139.59.224.190:/home/dean-cloud/gii/kursi-roda/kursi-roda-fastapi/
-          rsync -avz --delete venv/ dean-cloud@139.59.224.190:/home/dean-cloud/gii/kursi-roda/venv/
+          rsync -avz ./ dean-cloud@139.59.224.190:/home/dean-cloud/gii/kursi-roda/kursi-roda-fastapi/
         env:
           SSH_PRIVATE_KEY: ${{ secrets.VPS_SSH_KEY }}
