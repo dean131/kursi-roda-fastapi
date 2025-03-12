@@ -7,7 +7,7 @@ services:
     restart: always
     volumes:
       - .:/app
-      - ./venv:/venv
+      - ./venv:/test
     depends_on:
       - kursi-roda-postgres
     env_file:

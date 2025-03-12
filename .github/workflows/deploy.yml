@@ -38,3 +38,15 @@ jobs:
           rsync -avz ./ dean-cloud@139.59.224.190:/home/dean-cloud/gii/kursi-roda/kursi-roda-fastapi/
         env:
           SSH_PRIVATE_KEY: ${{ secrets.VPS_SSH_KEY }}
+
+      - name: Copy dependencies from mounted volume to /venv
+        uses: appleboy/ssh-action@v0.1.10
+        with:
+            host: ${{ secrets.VPS_HOST }}
+            username: ${{ secrets.VPS_USER }}
+            port: ${{ secrets.VPS_PORT }}
+            key: ${{ secrets.VPS_SSH_KEY }}
+            script: |
+                cd /home/dean-cloud/gii/kursi-roda/kursi-roda-fastapi
+                docker exec -t kursi-roda-fastapi bash -c "cp -r /test/lib/python3.13/site-packages/* /venv/lib/python3.13/site-packages/"  
+                
