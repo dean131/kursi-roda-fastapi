@@ -14,7 +14,7 @@ app.include_router(product_route.router)
 
 @app.get("/")
 def home():
-    print("=====================================")
+    print("=====================================TEST")
     print("Python executable:", sys.executable)
     print("Python environment:", sys.prefix)
     print("=====================================")
