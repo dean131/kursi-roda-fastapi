@@ -55,7 +55,7 @@ jobs:
                     docker restart kursi-roda-fastapi
                 else
                     echo "Container does not exist, creating..."
-                    docker-compose up -d
+                    docker compose up -d
                 fi
 
       - name: Copy dependencies from mounted volume to /venv
