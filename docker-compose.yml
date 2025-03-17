@@ -7,8 +7,7 @@ services:
     restart: always
     volumes:
       - .:/app
-      - /home/dean-cloud/gii/kursi-roda/kursi-roda-fastapi/venv/lib/python3.13/site-packages:/venv/lib/python3.13/site-packages
-      - /home/dean-cloud/gii/kursi-roda/kursi-roda-fastapi/venv/bin:/venv/bin
+      - ../venv/lib/python3.13/site-packages:/usr/local/lib/python3.13/site-packages
     depends_on:
       - kursi-roda-postgres
     env_file:
