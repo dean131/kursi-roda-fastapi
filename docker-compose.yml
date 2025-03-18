@@ -8,7 +8,6 @@ services:
     volumes:
       - .:/app
       - ../venv/lib/python3.13/site-packages:/venv/lib/python3.13/site-packages
-      - ../venv/bin:/venv/bin
     depends_on:
       - kursi-roda-postgres
     env_file:
