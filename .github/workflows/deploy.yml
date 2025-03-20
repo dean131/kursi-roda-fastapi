@@ -40,8 +40,8 @@ jobs:
 
             - name: Sync dependencies and code to VPS
               run: |
-                  rsync -avz --exclude=.git --exclude=.github --exclude=venv ./ ${{ secrets.VPS_USER }}@${{ secrets.VPS_HOST }}:/home/${{ secrets.VPS_USER }}/gii/kursi-roda/kursi-roda-fastapi/app/
-                  rsync -avz venv/ ${{ secrets.VPS_USER }}@${{ secrets.VPS_HOST }}:/home/${{ secrets.VPS_USER }}/gii/kursi-roda/kursi-roda-fastapi/venv/
+                  rsync -avz --exclude=.git --exclude=.github ./ ${{ secrets.VPS_USER }}@${{ secrets.VPS_HOST }}:/home/${{ secrets.VPS_USER }}/gii/kursi-roda/kursi-roda-fastapi/app/
+                  # rsync -avz venv/ ${{ secrets.VPS_USER }}@${{ secrets.VPS_HOST }}:/home/${{ secrets.VPS_USER }}/gii/kursi-roda/kursi-roda-fastapi/venv/
               env:
                   SSH_PRIVATE_KEY: ${{ secrets.VPS_SSH_KEY }}
 
