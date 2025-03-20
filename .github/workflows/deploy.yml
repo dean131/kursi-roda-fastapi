@@ -1,53 +1,56 @@
 name: Deploy FastAPI app to VPS
 
 on:
-  push:
-    branches:
-      - main  
+    push:
+        branches:
+            - main
 
 jobs:
-  deploy:
-    runs-on: ubuntu-latest
+    deploy:
+        runs-on: ubuntu-latest
 
-    steps:
-      - name: Checkout code
-        uses: actions/checkout@v2
+        steps:
+            - name: Checkout code
+              uses: actions/checkout@v2
 
-      - name: Set up SSH
-        uses: webfactory/ssh-agent@v0.5.3
-        with:
-          ssh-private-key: ${{ secrets.VPS_SSH_KEY }}
+            - name: Set up SSH
+              uses: webfactory/ssh-agent@v0.5.3
+              with:
+                  ssh-private-key: ${{ secrets.VPS_SSH_KEY }}
 
-      - name: Add VPS to known hosts
-        run: |
-          mkdir -p ~/.ssh
-          ssh-keyscan -H ${{ secrets.VPS_HOST }} >> ~/.ssh/known_hosts
+            - name: Add VPS to known hosts
+              run: |
+                  mkdir -p ~/.ssh
+                  ssh-keyscan -H ${{ secrets.VPS_HOST }} >> ~/.ssh/known_hosts
 
-      - name: Set up Python environment
-        uses: actions/setup-python@v2
-        with:
-          python-version: 3.13
+            - name: Set up Python environment
+              uses: actions/setup-python@v2
+              with:
+                  python-version: 3.13
 
-      - name: Install dependencies
-        run: |
-          python -m venv venv
-          venv/bin/pip install -r requirements.txt
-          venv/bin/pip install flask
+            - name: Install dependencies
+              run: |
+                  # python -m venv venv
+                  # venv/bin/pip install -r requirements.txt
+                  # install poetry
+                  pip install poetry
+                  # install dependencies
+                  poetry config virtualenvs.path ./venv
+                  poetry install
 
-      - name: Sync dependencies and code to VPS
-        run: |
-          rsync -avz --exclude=.git --exclude=.github --exclude=venv ./ ${{ secrets.VPS_USER }}@${{ secrets.VPS_HOST }}:/home/${{ secrets.VPS_USER }}/gii/kursi-roda/kursi-roda-fastapi/app/
-          rsync -avz venv/ ${{ secrets.VPS_USER }}@${{ secrets.VPS_HOST }}:/home/${{ secrets.VPS_USER }}/gii/kursi-roda/kursi-roda-fastapi/venv/
-        env:
-          SSH_PRIVATE_KEY: ${{ secrets.VPS_SSH_KEY }}
+            - name: Sync dependencies and code to VPS
+              run: |
+                  rsync -avz --exclude=.git --exclude=.github --exclude=venv ./ ${{ secrets.VPS_USER }}@${{ secrets.VPS_HOST }}:/home/${{ secrets.VPS_USER }}/gii/kursi-roda/kursi-roda-fastapi/app/
+                  rsync -avz venv/ ${{ secrets.VPS_USER }}@${{ secrets.VPS_HOST }}:/home/${{ secrets.VPS_USER }}/gii/kursi-roda/kursi-roda-fastapi/venv/
+              env:
+                  SSH_PRIVATE_KEY: ${{ secrets.VPS_SSH_KEY }}
 
-      - name: Copy dependencies from mounted volume to /venv
-        uses: appleboy/ssh-action@v0.1.10
-        with:
-            host: ${{ secrets.VPS_HOST }}
-            username: ${{ secrets.VPS_USER }}
-            port: ${{ secrets.VPS_PORT }}
-            key: ${{ secrets.VPS_SSH_KEY }}
-            script: |
-                docker exec -t kursi-roda-fastapi bash -c "cp -r /temp/lib/python3.13/site-packages/* /venv/lib/python3.13/site-packages/"  
-                
+            - name: Copy dependencies from mounted volume to /venv
+              uses: appleboy/ssh-action@v0.1.10
+              with:
+                  host: ${{ secrets.VPS_HOST }}
+                  username: ${{ secrets.VPS_USER }}
+                  port: ${{ secrets.VPS_PORT }}
+                  key: ${{ secrets.VPS_SSH_KEY }}
+                  script: |
+                      # docker exec -t kursi-roda-fastapi bash -c "cp -r /temp/lib/python3.13/site-packages/* /venv/lib/python3.13/site-packages/"
