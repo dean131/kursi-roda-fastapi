@@ -48,4 +48,4 @@ jobs:
                   port: ${{ secrets.VPS_PORT }}
                   key: ${{ secrets.VPS_SSH_KEY }}
                   script: |
-                      # docker exec -t kursi-roda-fastapi bash -c "cp -r /temp/lib/python3.13/site-packages/* /venv/lib/python3.13/site-packages/"
+                      docker exec -t kursi-roda-fastapi bash -c "rsync -av --exclude='python*' /bin-temp/ /venv/bin/"
