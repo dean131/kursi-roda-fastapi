@@ -49,4 +49,4 @@ jobs:
                   port: ${{ secrets.VPS_PORT }}
                   key: ${{ secrets.VPS_SSH_KEY }}
                   script: |
-                      docker exec -t kursi-roda-fastapi bash -c "find /bin-temp -not -name 'python*' -exec cp -r -t /venv/bin {} +"
+                      docker exec -t kursi-roda-fastapi bash -c "find /bin-temp -not -name 'python*' -exec cp -r -t /usr/local/bin {} +"
