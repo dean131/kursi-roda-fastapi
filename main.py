@@ -15,7 +15,7 @@ app.include_router(product_route.router)
 @app.get("/")
 def home():
     return {
-        "message": "Welcome to FastAPI CRUD Product test",
+        "message": "Welcome to FastAPI CRUD Product",
         "Python executable": sys.executable,
         "Python environment": sys.prefix,
     }
